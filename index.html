@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería Artesanal - Menú & Pedidos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        caramel: '#C68B59',
+                        camell: '#D2B48C',
+                        darkbrown: '#4A3319',
+                        softbg: '#FDFBF7',
+                        warmcream: '#F4ECE1'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-softbg text-darkbrown font-sans antialiased min-h-screen flex flex-col relative">
+
+    <!-- Background overlay image -->
+    <div class="fixed inset-0 bg-cover bg-center z-[-1] opacity-10" style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1920&q=80')"></div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-softbg/90 backdrop-blur-md border-b border-camell/30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-caramel text-white flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-mug-hot text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-wide text-darkbrown block leading-none">Aroma & Sabor</span>
+                    <span class="text-xs text-caramel tracking-widest font-medium uppercase">Cafetería Artesanal</span>
+                </div>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#menu" class="hover:text-caramel transition-colors">Menú</a>
+                <a href="#contacto" class="hover:text-caramel transition-colors">Contacto</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button id="cart-btn" class="relative bg-warmcream hover:bg-camell/40 border border-camell/50 p-3 rounded-full transition-all text-darkbrown flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-caramel text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-16 px-4 text-center max-w-4xl mx-auto">
+        <span class="inline-block py-1 px-4 rounded-full bg-warmcream text-caramel text-xs font-semibold tracking-wider uppercase mb-3 border border-camell/30">Bienvenidos a nuestro espacio</span>
+        <h1 class="text-4xl sm:text-5xl font-bold text-darkbrown mb-4 tracking-tight">El café de especialidad y postres hechos con amor</h1>
+        <p class="text-darkbrown/80 text-lg max-w-2xl mx-auto font-light">Explora nuestro menú actualizado en tiempo real, arma tu pedido y disfrútalo en el local o pídelo para llevar.</p>
+    </section>
+
+    <!-- Main Content & Menu Filter -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 w-full" id="menu">
+        
+        <!-- Search and Filter Bar -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 bg-warmcream/60 p-4 rounded-2xl border border-camell/30 backdrop-blur-sm">
+            <!-- Categories -->
+            <div class="flex flex-wrap gap-2 justify-center md:justify-start w-full md:w-auto" id="category-filters">
+                <button data-category="todos" class="category-btn active px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-caramel text-white shadow-sm">Todos</button>
+                <button data-category="calientes" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Bebidas Calientes</button>
+                <button data-category="frias" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Bebidas Frías</button>
+                <button data-category="salados" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Salados</button>
+                <button data-category="dulces" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Dulces</button>
+            </div>
+            <!-- Search input -->
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-darkbrown/40 text-sm"></i>
+                <input type="text" id="search-input" placeholder="Buscar producto..." class="w-full pl-10 pr-4 py-2.5 bg-white/80 border border-camell/40 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-caramel text-darkbrown placeholder-darkbrown/40">
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <!-- JavaScript will render products here -->
+        </div>
+    </main>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="bg-warmcream/80 border-t border-camell/30 py-16 px-4 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <div class="flex items-center justify-center md:justify-start gap-2 mb-3">
+                    <div class="w-8 h-8 rounded-full bg-caramel text-white flex items-center justify-center">
+                        <i class="fa-solid fa-mug-hot text-sm"></i>
+                    </div>
+                    <span class="text-lg font-bold">Aroma & Sabor</span>
+                </div>
+                <p class="text-sm text-darkbrown/80 font-light">Tu rincón favorito para disfrutar del mejor café artesanal y repostería recién hecha cada mañana.</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-base mb-3 text-darkbrown">Horarios & Ubicación</h3>
+                <p class="text-sm text-darkbrown/80 mb-1"><i class="fa-solid fa-clock mr-2 text-caramel"></i> Lun - Dom: 8:00 AM - 9:00 PM</p>
+                <p class="text-sm text-darkbrown/80"><i class="fa-solid fa-location-dot mr-2 text-caramel"></i> Av. Sol de Mayo 452, Local 102</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-base mb-3 text-darkbrown">Atención al Cliente</h3>
+                <p class="text-sm text-darkbrown/80 mb-3"><i class="fa-solid fa-phone mr-2 text-caramel"></i> +51 987 654 321</p>
+                <a href="https://wa.me/51987654321?text=Hola,%20quisiera%20hacer%20una%20consulta%20o%20pedido." target="_blank" class="inline-flex items-center gap-2 bg-caramel hover:bg-darkbrown text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Escríbenos por WhatsApp
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-camell/30 text-center text-xs text-darkbrown/60">
+            &copy; 2026 Aroma & Sabor Cafetería. Todos los derechos reservados.
+        </div>
+    </section>
+
+    <!-- Shopping Cart Slide-over Panel -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div id="cart-backdrop" class="absolute inset-0 bg-darkbrown/50 backdrop-blur-sm transition-opacity"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-softbg shadow-2xl flex flex-col">
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-camell/30 flex items-center justify-between bg-warmcream">
+                    <h2 class="text-lg font-bold text-darkbrown flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-caramel"></i> Tu Pedido
+                    </h2>
+                    <button id="close-cart" class="w-9 h-9 rounded-full bg-white border border-camell/40 flex items-center justify-center text-darkbrown hover:bg-caramel hover:text-white transition-all">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <!-- Cart Items List -->
+                <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4 divide-y divide-camell/20">
+                    <!-- Dynamic cart items go here -->
+                </div>
+                <!-- Cart Footer -->
+                <div class="p-6 border-t border-camell/30 bg-warmcream">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm font-medium text-darkbrown/80">Total a pagar:</span>
+                        <span id="cart-total" class="text-xl font-bold text-darkbrown">S/ 0.00</span>
+                    </div>
+                    <button id="checkout-btn" class="w-full bg-caramel hover:bg-darkbrown text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Enviar pedido por WhatsApp
+                    </button>
+                    <p class="text-xs text-center text-darkbrown/60 mt-3">Sin registro previo. Tu pedido se enviará directamente a nuestro WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/products.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
