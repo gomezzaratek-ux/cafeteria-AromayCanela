@@ -3,158 +3,727 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafetería Artesanal - Menú & Pedidos</title>
+    <title>Aroma & Canela | Cafetería Artesanal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         caramel: '#C68B59',
-                        camell: '#D2B48C',
-                        darkbrown: '#4A3319',
-                        softbg: '#FDFBF7',
-                        warmcream: '#F4ECE1'
+                        camel: '#D2B48C',
+                        cream: '#FDFBF7',
+                        softbrown: '#8D6E63',
+                        darkbrown: '#4E342E',
+                        pastelbeige: '#F5EBE6',
+                        pastelpink: '#F3E5F5',
+                        warmamber: '#EFEBE9'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF7;
+            color: #4E342E;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Background subtle overlay styling */
+        .cafe-bg {
+            background-image: linear-gradient(rgba(78, 52, 46, 0.75), rgba(78, 52, 46, 0.75)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5EBE6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D2B48C;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C68B59;
+        }
+    </style>
 </head>
-<body class="bg-softbg text-darkbrown font-sans antialiased min-h-screen flex flex-col relative">
+<body class="bg-cream text-darkbrown antialiased selection:bg-camel selection:text-white">
 
-    <!-- Background overlay image -->
-    <div class="fixed inset-0 bg-cover bg-center z-[-1] opacity-10" style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1920&q=80')"></div>
-
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-40 bg-softbg/90 backdrop-blur-md border-b border-camell/30 shadow-sm">
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-cream/95 backdrop-blur-md border-b border-camel/20 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3">
+            <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-full bg-caramel text-white flex items-center justify-center shadow-md">
                     <i class="fa-solid fa-mug-hot text-lg"></i>
                 </div>
                 <div>
-                    <span class="text-xl font-bold tracking-wide text-darkbrown block leading-none">Aroma & Sabor</span>
-                    <span class="text-xs text-caramel tracking-widest font-medium uppercase">Cafetería Artesanal</span>
+                    <span class="text-2xl font-serif font-bold tracking-wide text-darkbrown">Aroma & Canela</span>
+                    <p class="text-xs text-softbrown tracking-widest uppercase">Café de Especialidad</p>
                 </div>
-            </a>
+            </div>
             
-            <nav class="hidden md:flex items-center gap-8 font-medium">
-                <a href="#menu" class="hover:text-caramel transition-colors">Menú</a>
-                <a href="#contacto" class="hover:text-caramel transition-colors">Contacto</a>
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                <a href="#inicio" class="text-darkbrown hover:text-caramel transition">Inicio</a>
+                <a href="#menu" class="text-darkbrown hover:text-caramel transition">Menú</a>
+                <a href="#nosotros" class="text-darkbrown hover:text-caramel transition">Nuestra Esencia</a>
+                <a href="#contacto" class="text-darkbrown hover:text-caramel transition">Contacto</a>
             </nav>
 
-            <div class="flex items-center gap-4">
-                <button id="cart-btn" class="relative bg-warmcream hover:bg-camell/40 border border-camell/50 p-3 rounded-full transition-all text-darkbrown flex items-center justify-center shadow-sm">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCartModal()" class="relative bg-pastelbeige hover:bg-camel/30 text-darkbrown p-3 rounded-full transition shadow-sm flex items-center justify-center" aria-label="Abrir carrito">
                     <i class="fa-solid fa-bag-shopping text-lg"></i>
                     <span id="cart-badge" class="absolute -top-1 -right-1 bg-caramel text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow hidden">0</span>
                 </button>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-darkbrown p-2 rounded-lg hover:bg-pastelbeige transition">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream border-b border-camel/20 px-4 pt-2 pb-4 space-y-2">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-pastelbeige font-medium">Inicio</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-pastelbeige font-medium">Menú</a>
+            <a href="#nosotros" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-pastelbeige font-medium">Nuestra Esencia</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-pastelbeige font-medium">Contacto</a>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative py-16 px-4 text-center max-w-4xl mx-auto">
-        <span class="inline-block py-1 px-4 rounded-full bg-warmcream text-caramel text-xs font-semibold tracking-wider uppercase mb-3 border border-camell/30">Bienvenidos a nuestro espacio</span>
-        <h1 class="text-4xl sm:text-5xl font-bold text-darkbrown mb-4 tracking-tight">El café de especialidad y postres hechos con amor</h1>
-        <p class="text-darkbrown/80 text-lg max-w-2xl mx-auto font-light">Explora nuestro menú actualizado en tiempo real, arma tu pedido y disfrútalo en el local o pídelo para llevar.</p>
-    </section>
-
-    <!-- Main Content & Menu Filter -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 w-full" id="menu">
-        
-        <!-- Search and Filter Bar -->
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 bg-warmcream/60 p-4 rounded-2xl border border-camell/30 backdrop-blur-sm">
-            <!-- Categories -->
-            <div class="flex flex-wrap gap-2 justify-center md:justify-start w-full md:w-auto" id="category-filters">
-                <button data-category="todos" class="category-btn active px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-caramel text-white shadow-sm">Todos</button>
-                <button data-category="calientes" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Bebidas Calientes</button>
-                <button data-category="frias" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Bebidas Frías</button>
-                <button data-category="salados" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Salados</button>
-                <button data-category="dulces" class="category-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-white/70 text-darkbrown hover:bg-camell/30 border border-camell/30">Dulces</button>
-            </div>
-            <!-- Search input -->
-            <div class="relative w-full md:w-72">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-darkbrown/40 text-sm"></i>
-                <input type="text" id="search-input" placeholder="Buscar producto..." class="w-full pl-10 pr-4 py-2.5 bg-white/80 border border-camell/40 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-caramel text-darkbrown placeholder-darkbrown/40">
-            </div>
-        </div>
-
-        <!-- Products Grid -->
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <!-- JavaScript will render products here -->
-        </div>
-    </main>
-
-    <!-- Contact Section -->
-    <section id="contacto" class="bg-warmcream/80 border-t border-camell/30 py-16 px-4 mt-auto">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
-                <div class="flex items-center justify-center md:justify-start gap-2 mb-3">
-                    <div class="w-8 h-8 rounded-full bg-caramel text-white flex items-center justify-center">
-                        <i class="fa-solid fa-mug-hot text-sm"></i>
-                    </div>
-                    <span class="text-lg font-bold">Aroma & Sabor</span>
-                </div>
-                <p class="text-sm text-darkbrown/80 font-light">Tu rincón favorito para disfrutar del mejor café artesanal y repostería recién hecha cada mañana.</p>
-            </div>
-            <div>
-                <h3 class="font-bold text-base mb-3 text-darkbrown">Horarios & Ubicación</h3>
-                <p class="text-sm text-darkbrown/80 mb-1"><i class="fa-solid fa-clock mr-2 text-caramel"></i> Lun - Dom: 8:00 AM - 9:00 PM</p>
-                <p class="text-sm text-darkbrown/80"><i class="fa-solid fa-location-dot mr-2 text-caramel"></i> Av. Sol de Mayo 452, Local 102</p>
-            </div>
-            <div>
-                <h3 class="font-bold text-base mb-3 text-darkbrown">Atención al Cliente</h3>
-                <p class="text-sm text-darkbrown/80 mb-3"><i class="fa-solid fa-phone mr-2 text-caramel"></i> +51 987 654 321</p>
-                <a href="https://wa.me/51987654321?text=Hola,%20quisiera%20hacer%20una%20consulta%20o%20pedido." target="_blank" class="inline-flex items-center gap-2 bg-caramel hover:bg-darkbrown text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Escríbenos por WhatsApp
+    <!-- Hero Section with Subtle Coffee Background -->
+    <section id="inicio" class="cafe-bg min-h-[75vh] flex items-center justify-center text-center px-4 relative">
+        <div class="max-w-3xl mx-auto text-white py-16">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-camel/40 text-cream text-xs uppercase tracking-widest mb-4 font-semibold backdrop-blur-sm border border-white/20">
+                Artesanal & Acogedor
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-serif font-bold mb-6 leading-tight text-white drop-shadow-md">
+                Cada taza cuenta una historia única
+            </h1>
+            <p class="text-lg sm:text-xl text-cream/90 mb-8 font-light max-w-2xl mx-auto drop-shadow">
+                Disfruta de granos seleccionados, panadería fresca del día y un ambiente cálido diseñado para ti. Sin registros previos, pide directo a tu mesa o para llevar.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#menu" class="bg-caramel hover:bg-softbrown text-white font-medium px-8 py-3.5 rounded-xl shadow-lg transition duration-300 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Ver Menú Digital</span>
+                </a>
+                <a href="#contacto" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 font-medium px-8 py-3.5 rounded-xl backdrop-blur-sm transition duration-300 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Ubicación y Horarios</span>
                 </a>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-camell/30 text-center text-xs text-darkbrown/60">
-            &copy; 2026 Aroma & Sabor Cafetería. Todos los derechos reservados.
+    </section>
+
+    <!-- Main Menu Section -->
+    <main id="menu" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-darkbrown mb-3">Nuestro Menú Artesanal</h2>
+            <p class="text-softbrown">Explora nuestras categorías preparadas con ingredientes de alta calidad y mucho amor.</p>
+        </div>
+
+        <!-- Category Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+            <button onclick="filterCategory('todos')" class="category-btn active px-6 py-2.5 rounded-full text-sm font-medium transition shadow-sm bg-caramel text-white" data-category="todos">
+                <i class="fa-solid fa-border-all mr-2"></i>Todos
+            </button>
+            <button onclick="filterCategory('calientes')" class="category-btn px-6 py-2.5 rounded-full text-sm font-medium transition shadow-sm bg-pastelbeige text-darkbrown hover:bg-camel/30" data-category="calientes">
+                <i class="fa-solid fa-mug-hot mr-2"></i>Bebidas Calientes
+            </button>
+            <button onclick="filterCategory('frias')" class="category-btn px-6 py-2.5 rounded-full text-sm font-medium transition shadow-sm bg-pastelbeige text-darkbrown hover:bg-camel/30" data-category="frias">
+                <i class="fa-solid fa-glass-water mr-2"></i>Bebidas Frías
+            </button>
+            <button onclick="filterCategory('salados')" class="category-btn px-6 py-2.5 rounded-full text-sm font-medium transition shadow-sm bg-pastelbeige text-darkbrown hover:bg-camel/30" data-category="salados">
+                <i class="fa-solid fa-burger mr-2"></i>Salados
+            </button>
+            <button onclick="filterCategory('dulces')" class="category-btn px-6 py-2.5 rounded-full text-sm font-medium transition shadow-sm bg-pastelbeige text-darkbrown hover:bg-camel/30" data-category="dulces">
+                <i class="fa-solid fa-cookie-bite mr-2"></i>Dulces
+            </button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="max-w-md mx-auto mb-12">
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-softbrown">
+                    <i class="fa-solid fa-search"></i>
+                </span>
+                <input type="text" id="search-input" oninput="filterProducts()" placeholder="Busca tu café o postre favorito..." class="w-full pl-11 pr-4 py-3 bg-white border border-camel/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-caramel shadow-sm text-darkbrown placeholder-softbrown/60 text-sm">
+            </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Products will be injected dynamically via JS -->
+        </div>
+
+        <!-- Empty state message -->
+        <div id="empty-state" class="hidden text-center py-16">
+            <div class="w-16 h-16 bg-pastelbeige rounded-full flex items-center justify-center mx-auto mb-4 text-caramel text-2xl">
+                <i class="fa-solid fa-mug-saucer"></i>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-darkbrown mb-2">No encontramos productos</h3>
+            <p class="text-softbrown text-sm">Intenta buscando con otro término o cambia de categoría.</p>
+        </div>
+    </main>
+
+    <!-- About/Essence Section -->
+    <section id="nosotros" class="bg-pastelbeige/50 py-16 border-y border-camel/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-caramel font-semibold text-sm uppercase tracking-widest">Nuestra Esencia</span>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-darkbrown mt-2 mb-6">Pasión por el café de origen y momentos memorables</h2>
+                    <p class="text-softbrown mb-4 leading-relaxed">
+                        En Aroma & Canela creemos que una cafetería es un refugio contra el bullicio diario. Seleccionamos granos de altura de productores locales y tostadores artesanales para brindarte notas aromáticas inigualables en cada taza.
+                    </p>
+                    <p class="text-softbrown mb-6 leading-relaxed">
+                        Nuestra repostería es horneada cada mañana con mantequilla pura, canela selecta y mucho cariño. Ven a disfrutar de un espacio cálido, ideal para leer, trabajar o compartir una buena charla.
+                    </p>
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-camel/30">
+                        <div>
+                            <span class="block text-2xl font-serif font-bold text-caramel">100%</span>
+                            <span class="text-xs text-softbrown uppercase tracking-wider">Artesanal</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-serif font-bold text-caramel">Grano</span>
+                            <span class="text-xs text-softbrown uppercase tracking-wider">De Altura</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-serif font-bold text-caramel">Fresco</span>
+                            <span class="text-xs text-softbrown uppercase tracking-wider">Cada Día</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" alt="Interior de la cafetería" class="rounded-3xl shadow-xl w-full h-[400px] object-cover">
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-lg border border-camel/25 hidden sm:block max-w-xs">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="text-amber-500 flex space-x-1 text-sm">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="font-bold text-sm text-darkbrown">4.9 / 5.0</span>
+                        </div>
+                        <p class="text-xs text-softbrown">"El mejor capuchino de la ciudad y una atención increíblemente cálida."</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Shopping Cart Slide-over Panel -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <div id="cart-backdrop" class="absolute inset-0 bg-darkbrown/50 backdrop-blur-sm transition-opacity"></div>
-        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-softbg shadow-2xl flex flex-col">
-                <!-- Cart Header -->
-                <div class="p-6 border-b border-camell/30 flex items-center justify-between bg-warmcream">
-                    <h2 class="text-lg font-bold text-darkbrown flex items-center gap-2">
-                        <i class="fa-solid fa-bag-shopping text-caramel"></i> Tu Pedido
-                    </h2>
-                    <button id="close-cart" class="w-9 h-9 rounded-full bg-white border border-camell/40 flex items-center justify-center text-darkbrown hover:bg-caramel hover:text-white transition-all">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <!-- Cart Items List -->
-                <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4 divide-y divide-camell/20">
-                    <!-- Dynamic cart items go here -->
-                </div>
-                <!-- Cart Footer -->
-                <div class="p-6 border-t border-camell/30 bg-warmcream">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-sm font-medium text-darkbrown/80">Total a pagar:</span>
-                        <span id="cart-total" class="text-xl font-bold text-darkbrown">S/ 0.00</span>
+    <!-- Contact & Location Section -->
+    <section id="contacto" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-darkbrown mb-3">Visítanos o Contáctanos</h2>
+            <p class="text-softbrown">Nos encantaría recibirte o atender cualquier duda que tengas sobre nuestros productos.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Info Cards -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-camel/20 flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 bg-pastelbeige text-caramel rounded-2xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <button id="checkout-btn" class="w-full bg-caramel hover:bg-darkbrown text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-whatsapp text-xl"></i> Enviar pedido por WhatsApp
+                    <h3 class="text-xl font-serif font-bold text-darkbrown mb-2">Ubicación</h3>
+                    <p class="text-softbrown text-sm mb-4">Av. Larco 456, Miraflores<br>Lima, Perú</p>
+                </div>
+                <div class="text-xs text-softbrown bg-pastelbeige/50 p-3 rounded-xl border border-camel/20">
+                    <i class="fa-solid fa-circle-info text-caramel mr-1"></i> Zona segura y Pet Friendly 🐾
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-camel/20 flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 bg-pastelbeige text-caramel rounded-2xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-darkbrown mb-2">Horarios</h3>
+                    <p class="text-softbrown text-sm mb-4">Lunes a Viernes: 7:30 AM - 9:00 PM<br>Sábados y Domingos: 8:00 AM - 10:00 PM</p>
+                </div>
+                <div class="text-xs text-softbrown bg-pastelbeige/50 p-3 rounded-xl border border-camel/20">
+                    <i class="fa-solid fa-fire text-caramel mr-1"></i> Cocina y barra abiertas todo el día
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-camel/20 flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 bg-pastelbeige text-caramel rounded-2xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-darkbrown mb-2">Contacto Directo</h3>
+                    <p class="text-softbrown text-sm mb-4">Teléfono: +51 987 654 321<br>Email: hola@aromaycanela.pe</p>
+                </div>
+                <a href="https://wa.me/51987654321?text=Hola,%20quisiera%20hacer%20una%20consulta%20o%20pedido" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-2.5 rounded-xl transition text-center flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Escribir por WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Modal Drawer -->
+    <div id="cart-modal" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-darkbrown/50 backdrop-blur-sm transition-opacity" onclick="toggleCartModal()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-cream shadow-2xl flex flex-col">
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-camel/20 flex items-center justify-between bg-white">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-bag-shopping text-caramel text-xl"></i>
+                        <h2 class="text-xl font-serif font-bold text-darkbrown">Tu Pedido</h2>
+                    </div>
+                    <button onclick="toggleCartModal()" class="text-softbrown hover:text-darkbrown p-2 rounded-lg hover:bg-pastelbeige transition">
+                        <i class="fa-solid fa-xmark text-xl"></i>
                     </button>
-                    <p class="text-xs text-center text-darkbrown/60 mt-3">Sin registro previo. Tu pedido se enviará directamente a nuestro WhatsApp.</p>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-camel/10">
+                    <!-- Items will be injected here -->
+                </div>
+
+                <!-- Cart Footer -->
+                <div class="p-6 border-t border-camel/20 bg-white shadow-lg">
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm text-softbrown">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">S/ 0.00</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-softbrown">
+                            <span>Empaque eco-amigable</span>
+                            <span>S/ 0.00</span>
+                        </div>
+                        <div class="flex justify-between text-lg font-bold text-darkbrown pt-2 border-t border-camel/20">
+                            <span>Total</span>
+                            <span id="cart-total" class="text-caramel">S/ 0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3.5 rounded-xl transition flex items-center justify-center space-x-2 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>Enviar pedido por WhatsApp</span>
+                        </button>
+                        <button onclick="clearCart()" class="w-full bg-pastelbeige hover:bg-camel/30 text-darkbrown text-sm font-medium py-2.5 rounded-xl transition">
+                            Vaciar carrito
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Files -->
-    <script src="js/products.js"></script>
-    <script src="js/app.js"></script>
+    <!-- Custom Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-darkbrown text-white px-6 py-3 rounded-2xl shadow-xl flex items-center space-x-3 text-sm">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-message">Producto añadido al carrito</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-darkbrown text-cream/80 py-12 border-t border-camel/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-caramel text-white flex items-center justify-center">
+                    <i class="fa-solid fa-mug-hot text-sm"></i>
+                </div>
+                <span class="text-xl font-serif font-bold text-white">Aroma & Canela</span>
+            </div>
+            <p class="text-xs text-cream/60">© 2026 Aroma & Canela. Todos los derechos reservados. Hecho con aroma a café.</p>
+            <div class="flex space-x-4 text-lg">
+                <a href="#" class="hover:text-caramel transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-caramel transition"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-caramel transition"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Product Database with categories, status, descriptions and Unsplash coffee images
+        const products = [
+            {
+                id: 1,
+                name: "Café Latte Clásico",
+                category: "calientes",
+                price: 10.50,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80",
+                review: "Espresso doble con leche vaporizada y una fina capa de crema sedosa. Suave y reconfortante."
+            },
+            {
+                id: 2,
+                name: "Cappuccino Artesanal",
+                category: "calientes",
+                price: 11.00,
+                status: "Últimas",
+                statusClass: "bg-amber-100 text-amber-800 border-amber-200",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80",
+                review: "Equilibrio perfecto entre espresso, leche vaporizada y abundante espuma con toque de cacao."
+            },
+            {
+                id: 3,
+                name: "Mocha de Chocolate Suizo",
+                category: "calientes",
+                price: 13.50,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1578314675249-a6919f3cbce3?auto=format&fit=crop&w=600&q=80",
+                review: "Deliciosa fusión de café espresso, chocolate artesanal derretido y leche cremosa."
+            },
+            {
+                id: 4,
+                name: "Iced Caramel Macchiato",
+                category: "frias",
+                price: 14.00,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80",
+                review: "Café frío con leche, cubitos de cristal y un generoso remolino de caramelo líquido."
+            },
+            {
+                id: 5,
+                name: "Cold Brew de Origen",
+                category: "frias",
+                price: 12.50,
+                status: "Agotado",
+                statusClass: "bg-rose-100 text-rose-800 border-rose-200",
+                image: "https://images.unsplash.com/photo-1517959105821-eaf259196fca?auto=format&fit=crop&w=600&q=80",
+                review: "Extracción en frío durante 18 horas. Notas achocolatadas intensas y baja acidez."
+            },
+            {
+                id: 6,
+                name: "Frappé Vainilla Cream",
+                category: "frias",
+                price: 15.00,
+                status: "Últimas",
+                statusClass: "bg-amber-100 text-amber-800 border-amber-200",
+                image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80",
+                review: "Bebida helada licuada con extracto natural de vainilla y cobertura de crema batida."
+            },
+            {
+                id: 7,
+                name: "Croissant de Jamón y Queso Edam",
+                category: "salados",
+                price: 12.00,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80",
+                review: "Hojaldre crujiente y mantequilloso horneado al momento con jamón inglés y queso fundido."
+            },
+            {
+                id: 8,
+                name: "Panini de Pollo con Pesto",
+                category: "salados",
+                price: 16.50,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80",
+                review: "Pan artesanal de masa madre tostado, pechuga desmenuzada, salsa pesto y queso mozzarella."
+            },
+            {
+                id: 9,
+                name: "Quiche Lorraine Clásico",
+                category: "salados",
+                price: 14.00,
+                status: "Últimas",
+                statusClass: "bg-amber-100 text-amber-800 border-amber-200",
+                image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=600&q=80",
+                review: "Tarta salada horneada con tocino ahumado, crema de leche, queso gruyère y especias."
+            },
+            {
+                id: 10,
+                name: "Cheesecake de Frutos Rojos",
+                category: "dulces",
+                price: 13.00,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80",
+                review: "Cremoso pastel de queso sobre base de galleta con mermelada casera de arándanos y frambuesas."
+            },
+            {
+                id: 11,
+                name: "Roll de Canela Glaseado",
+                category: "dulces",
+                price: 9.50,
+                status: "Disponible",
+                statusClass: "bg-emerald-100 text-emerald-800 border-emerald-200",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+                review: "Esponjoso pan dulce enrollado con canela selecta y cobertura de glaseado de queso crema."
+            },
+            {
+                id: 12,
+                name: "Torta de Chocolate Húmeda",
+                category: "dulces",
+                price: 14.00,
+                status: "Agotado",
+                statusClass: "bg-rose-100 text-rose-800 border-rose-200",
+                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+                review: "Capas de bizcocho de cacao puro con relleno de fudge artesanal de chocolate peruano."
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'todos';
+
+        // Initialize application on load
+        window.onload = function () {
+            renderProducts(products);
+            updateCartUI();
+        };
+
+        // Render product cards in the grid
+        function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            const emptyState = document.getElementById('empty-state');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            items.forEach(product => {
+                const isSoldOut = product.status === 'Agotado';
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 border border-camel/20 flex flex-col justify-between ${isSoldOut ? 'opacity-75' : ''}`;
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-pastelbeige">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x400/F5EBE6/4E342E?text=Café'">
+                            <div class="absolute top-3 left-3">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold border ${product.statusClass} shadow-sm backdrop-blur-md">
+                                    ${product.status}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-serif font-bold text-lg text-darkbrown mb-1">${product.name}</h3>
+                            <p class="text-xs text-softbrown mb-4 line-clamp-2 leading-relaxed">${product.review}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 flex items-center justify-between">
+                        <span class="text-lg font-bold text-caramel">S/ ${product.price.toFixed(2)}</span>
+                        <button onclick="addToCart(${product.id})" ${isSoldOut ? 'disabled' : ''} class="px-4 py-2 rounded-xl text-sm font-medium transition flex items-center space-x-2 ${isSoldOut ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-pastelbeige text-darkbrown hover:bg-caramel hover:text-white'}">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Agregar</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter products by category
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update button styles
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.remove('bg-pastelbeige', 'text-darkbrown');
+                    btn.classList.add('bg-caramel', 'text-white');
+                } else {
+                    btn.classList.remove('bg-caramel', 'text-white');
+                    btn.classList.add('bg-pastelbeige', 'text-darkbrown');
+                }
+            });
+
+            filterProducts();
+        }
+
+        // Filter products by category and search query
+        function filterProducts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            
+            const filtered = products.filter(product => {
+                const matchesCategory = currentCategory === 'todos' || product.category === currentCategory;
+                const matchesSearch = product.name.toLowerCase().includes(query) || product.review.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+
+            renderProducts(filtered);
+        }
+
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Toggle Cart Modal Drawer
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Add item to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product || product.status === 'Agotado') return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Añadido: ${product.name}`);
+        }
+
+        // Update quantity in cart
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            }
+
+            updateCartUI();
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            updateCartUI();
+        }
+
+        // Clear entire cart
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+
+        // Update Cart UI components
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartBadge = document.getElementById('cart-badge');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartTotal = document.getElementById('cart-total');
+
+            const totalItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            if (totalItemsCount > 0) {
+                cartBadge.innerText = totalItemsCount;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-softbrown">
+                        <div class="w-12 h-12 bg-pastelbeige rounded-full flex items-center justify-center mx-auto mb-3 text-caramel">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <p class="text-sm font-medium">Tu carrito está vacío</p>
+                        <p class="text-xs text-softbrown/70 mt-1">¡Elige tus productos favoritos del menú!</p>
+                    </div>
+                `;
+                cartSubtotal.innerText = 'S/ 0.00';
+                cartTotal.innerText = 'S/ 0.00';
+                return;
+            }
+
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'py-4 flex items-center justify-between';
+                itemDiv.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-xl border border-camel/20" onerror="this.src='https://placehold.co/100x100/F5EBE6/4E342E?text=Café'">
+                        <div>
+                            <h4 class="font-serif font-bold text-sm text-darkbrown">${item.name}</h4>
+                            <span class="text-xs text-caramel font-semibold">S/ ${item.price.toFixed(2)} c/u</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="flex items-center border border-camel/30 rounded-lg bg-pastelbeige/50">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="px-2 py-1 text-xs text-darkbrown hover:bg-camel/30 rounded-l-lg transition">-</button>
+                            <span class="px-2 text-xs font-bold text-darkbrown">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="px-2 py-1 text-xs text-darkbrown hover:bg-camel/30 rounded-r-lg transition">+</button>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-rose-400 hover:text-rose-600 p-1.5 transition text-xs" aria-label="Eliminar producto">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+
+            cartSubtotal.innerText = `S/ ${subtotal.toFixed(2)}`;
+            cartTotal.innerText = `S/ ${subtotal.toFixed(2)}`;
+        }
+
+        // Checkout via WhatsApp with formatted order summary
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                showToast('Tu carrito está vacío', 'fa-circle-exclamation', 'text-amber-400');
+                return;
+            }
+
+            let message = "☕ *¡Hola, Aroma & Canela! Quisiera hacer el siguiente pedido:*%0A%0A";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `${index + 1}. *${item.name}* (Cant: ${item.quantity}) - S/ ${itemTotal.toFixed(2)}%0A`;
+            });
+
+            message += `%0A💰 *Total a cancelar: S/ ${total.toFixed(2)}*%0A%0A¡Muchas gracias!`;
+
+            const whatsappUrl = `https://wa.me/51987654321?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Toast notification system helper
+        function showToast(text, iconClass = 'fa-circle-check', iconColor = 'text-emerald-400') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMessage.innerText = text;
+            toastIcon.className = `fa-solid ${iconClass} ${iconColor}`;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
